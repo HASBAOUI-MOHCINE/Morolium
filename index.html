@@ -315,6 +315,37 @@
             color: #9CA3AF;
         }
 
+        /* Budget slide styling */
+        .budget-slide .budget-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 10px;
+        }
+        .budget-slide .budget-icon {
+            font-size: 48px;
+            color: #60A5FA;
+            flex: 0 0 auto;
+        }
+        .budget-slide .budget-title {
+            font-size: 40px;
+            font-weight: 900;
+            color: #FFFFFF;
+        }
+        .budget-slide .budget-subtitle {
+            color: #9CA3AF;
+            font-size: 18px;
+            margin-top: 6px;
+        }
+        .budget-slide .budget-table thead th { background-color: #111827; }
+        .budget-slide .budget-total td {
+            background: linear-gradient(90deg, #0ea5e9, #3b82f6);
+            color: #fff;
+            font-weight: 800;
+            font-size: 18px;
+            text-align: center;
+        }
+
         /* Q&A (for Slide 7) */
         .qa-layout {
             text-align: center;
@@ -376,36 +407,90 @@
 </div>
 
 <!-- الشريحة 3: الحل والقيمة المقدمة -->
-<div class="slide-container" id="slide3">
-    <h2 class="slide-title">الحل: Morolium</h2>
-    <div class="content-area">
-        <div class="two-column">
-            <div>
-                <ul>
-                    <li>
-                        <h3>منصة LMS مغربية 100%</h3>
-                        <p>احترافية، ثنائية اللغة (عربي/فرنسي)، تم تطوير محتواها بالكامل من قبل المؤسس.</p>
-                    </li>
-                    <li>
-                        <h3>تجربة تعلم سهلة ومرنة</h3>
-                        <p>توفير دورات جاهزة للموظفين مع واجهة مستخدم مبسطة تضمن سهولة الإعداد والاستخدام.</p>
-                    </li>
-                    <li>
-                        <h3>تحليلات الأداء والتوثيق</h3>
-                        <p>توفير شهادات معتمدة وتقارير تحليلات تقدمية لأداء الموظفين داخل الشركات.</p>
-                    </li>
-                </ul>
-            </div>
-            <div>
-                <div class="image-wrapper">
-                    <!-- This image is a placeholder showing a modern UI -->
-                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wzNjc5ODV8MHwxfHNlYXJjaHwxfHxkYXNoYm9hcmQlMjB1aXxlbnwwfHx8fDE3MzU5Mzg2NjN8MA&ixlib=rb-4.0.3&q=80&w=1080" alt="واجهة منصة Morolium">
+        <div class="slide-container" id="slide3">
+            <h2 class="slide-title">الحل: Morolium</h2>
+            <div class="content-area">
+                <div class="two-column">
+                    <div>
+                        <ul>
+                            <li>
+                                <h3>منصة LMS مغربية 100%</h3>
+                                <p>احترافية، ثنائية اللغة (عربي/فرنسي)، تم تطوير محتواها بالكامل من قبل المؤسس.</p>
+                            </li>
+                            <li>
+                                <h3>تجربة تعلم سهلة ومرنة</h3>
+                                <p>توفير دورات جاهزة للموظفين مع واجهة مستخدم مبسطة تضمن سهولة الإعداد والاستخدام.</p>
+                            </li>
+                            <li>
+                                <h3>تحليلات الأداء والتوثيق</h3>
+                                <p>توفير شهادات معتمدة وتقارير تحليلات تقدمية لأداء الموظفين داخل الشركات.</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="image-wrapper">
+                            <!-- This image is a placeholder showing a modern UI -->
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wzNjc5ODV8MHwxfHNlYXJjaHwxfHxkYXNoYm9hcmQlMjB1aXxlbnwwfHx8fDE3MzU5Mzg2NjN8MA&ixlib=rb-4.0.3&q=80&w=1080" alt="واجهة منصة Morolium">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-
+<div class="slide-container budget-slide" id="slide_budget">
+                                <div class="budget-header">
+                                    <div class="budget-icon"><i class="fa-solid fa-wallet"></i></div>
+                                    <div>
+                                        <div class="budget-title">جدول تمويل الإطلاق</div>
+                                        <div class="budget-subtitle">Budget de Lancement — تفاصيل المصاريف المطلوبة للـ INDH</div>
+                                    </div>
+                                </div>
+                                <div class="content-area table-layout">
+                                    <table class="budget-table">
+                                        <thead>
+                                            <tr>
+                                                <th>باب الصرف (Poste de Dépense)</th>
+                                                <th>التكلفة التقديرية (MAD)</th>
+                                                <th>المبرر (Justification)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1. البنية التحتية التقنية (Serveurs)</td>
+                                                <td>3,000 درهم</td>
+                                                <td>ضمان استضافة (Hébergement) قوية وآمنة للمنصة (OVH/DigitalOcean) لمدة سنة كاملة لدعم 50 شركة أولى.</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2. التسويق الرقمي الأولي (Marketing)</td>
+                                                <td>2,000 درهم</td>
+                                                <td>تمويل حملات إعلانية مركزة على LinkedIn و Facebook لاستهداف مسؤولي الموارد البشرية (HR) وجلب أول 10 عملاء.</td>
+                                            </tr>
+                                            <tr>
+                                                <td>3. التأسيس القانوني والعلامة التجارية</td>
+                                                <td>3,000 درهم</td>
+                                                <td>تغطية مصاريف التسجيل القانوني للشركة (OMPIC) لضمان حماية العلامة التجارية وبدء الفوترة بشكل قانوني.</td>
+                                            </tr>
+                                            <tr>
+                                                <td>4. أدوات التصميم والإنتاج</td>
+                                                <td>1,500 درهم</td>
+                                                <td>رسوم اشتراك سنوية للأدوات اللازمة لإنتاج وتصميم الدورات التعليمية الجديدة بشكل احترافي.</td>
+                                            </tr>
+                                            <tr>
+                                                <td>5. مصاريف تقنية إضافية</td>
+                                                <td>700 درهم</td>
+                                                <td>تغطية شهادة SSL، البريد الإلكتروني الاحترافي، ومصاريف الصيانة الأولية.</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>المساهمة الذاتية (Apport Personnel)</strong></td>
+                                                <td colspan="2">(لا يقدر بثمن): تم استثمار ما يعادل +12 شهراً من العمل (تطوير المنصة + بناء 10 دورات) كمساهمة ذاتية من المؤسس.</td>
+                                            </tr>
+                                            <tr class="budget-total">
+                                                <td><strong>إجمالي الدعم المطلوب (Total Sollicité)</strong></td>
+                                                <td colspan="2"><strong>~ 10,200 درهم</strong></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
 <!-- الشريحة 4: نموذج العمل (BMC) -->
 <div class="slide-container" id="slide4">
     <h2 class="slide-title">نموذج العمل (Business Model Canvas)</h2>
