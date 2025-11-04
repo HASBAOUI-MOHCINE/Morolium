@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عرض تقديمي: Morolium</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* 1. THE SETUP */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #e2e8f0;
+            display: grid;
+            gap: 20px;
+            grid-template-columns: 1fr;
+            margin: 0;
+            min-height: 100vh;
+            padding: 20px 0;
+            place-items: center;
+            font-family: 'Tajawal', sans-serif;
+            text-align: right; /* Default RTL text alignment */
+        }
+
+        .slide-container {
+            align-items: center;
+            background-color: #18181B; /* Dark background */
+            border-radius: 8px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            height: 720px;
+            justify-content: center;
+            overflow: hidden;
+            padding: 60px;
+            position: relative;
+            width: 1280px;
+            color: #E5E7EB; /* Light text */
+        }
+
+        /* 2. CONSISTENT TYPOGRAPHY */
+        .slide-container h1,
+        .slide-container h2,
+        .slide-container h3 {
+            color: #FFFFFF;
+            font-weight: 900;
+            margin: 0;
+        }
+
+        .slide-container p,
+        .slide-container li,
+        .slide-container .subtitle,
+        .slide-container th,
+        .slide-container td {
+            color: #D1D5DB; /* Lighter gray for body */
+            font-family: 'Tajawal', sans-serif;
+            font-size: 22px;
+            line-height: 1.6;
+        }
+
+        .slide-container h1 {
+            font-size: 80px;
+        }
+
+        .slide-container .slide-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            text-align: right;
+            width: 100%;
+            border-bottom: 4px solid #3B82F6; /* Accent color */
+            padding-bottom: 20px;
+        }
+
+        .slide-container h3 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #FFFFFF;
+        }
+
+        .slide-container .subtitle {
+            font-size: 28px;
+            font-weight: 400;
+            margin-top: 20px;
+            color: #9CA3AF; /* Subdued color */
+        }
+
+        .slide-container .content-area {
+            align-items: center;
+            display: flex;
+            flex-grow: 1;
+            justify-content: center;
+            width: 100%;
+        }
+
+        /* 3. LAYOUT DEFINITIONS */
+
+        /* Title_Slide */
+        .title-layout {
+            text-align: center;
+        }
+        .title-layout h1 {
+            font-size: 90px;
+        }
+        .title-layout .subtitle {
+            font-size: 32px;
+        }
+
+        /* Tiled_Text_With_Icons (for Slide 2) */
+        .tiled-content {
+            align-items: stretch;
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .tile {
+            align-items: center;
+            background-color: #27272A; /* Slightly lighter dark */
+            border-radius: 12px;
+            border: 1px solid #3F3F46;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            justify-content: flex-start;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .tile .icon {
+            color: #3B82F6; /* Accent color */
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        .tile h3 {
+            color: #3B82F6;
+        }
+        .tile p {
+            font-size: 18px;
+        }
+
+        /* Image_Right_Text_Left (for Slide 3) */
+        .two-column {
+            align-items: flex-start;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            width: 100%;
+        }
+
+        .two-column ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .two-column li {
+            font-size: 24px;
+            margin-bottom: 20px;
+            padding-right: 35px; /* RTL padding */
+            position: relative;
+        }
+
+        .two-column li::before {
+            content: '\f058'; /* FontAwesome check circle */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: #3B82F6;
+            font-size: 24px;
+            position: absolute;
+            right: 0;
+            top: 5px;
+        }
+
+        .image-wrapper {
+            border-radius: 12px;
+            height: 450px;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .image-wrapper img {
+            height: 100%;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        /* Table (for Slide 4) */
+        .table-layout {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .table-layout table {
+            border-collapse: collapse;
+            width: 100%;
+            flex-grow: 1;
+        }
+
+        .table-layout th,
+        .table-layout td {
+            border: 1px solid #4B5563; /* Darker border */
+            padding: 12px;
+            text-align: right;
+            vertical-align: top;
+        }
+
+        .table-layout th {
+            background-color: #374151; /* Header background */
+            color: #E5E7EB;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .table-layout td {
+            font-size: 15px;
+            line-height: 1.5;
+        }
+        .table-layout td ul {
+            margin: 0;
+            padding-right: 20px; /* RTL padding for list */
+        }
+        .table-layout td li {
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+
+
+        /* Styled_Bullet_Points (for Slide 5) */
+        .bullet-list {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .bullet-list ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .bullet-list li {
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-right: 45px; /* RTL padding */
+            position: relative;
+            font-size: 24px;
+        }
+
+        .bullet-list i {
+            color: #3B82F6; /* Accent color */
+            font-size: 28px;
+            position: absolute;
+            right: 0;
+            top: 5px;
+            text-align: center;
+        }
+
+        /* Bar_Chart_For_Comparisons (for Slide 6) */
+        .chart-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            width: 100%;
+        }
+
+        .bar {
+            align-items: center;
+            display: flex;
+            gap: 20px;
+        }
+
+        .bar .label {
+            color: #E5E7EB;
+            flex: 0 0 220px;
+            font-size: 20px;
+            font-weight: 700;
+            text-align: left; /* RTL: right-align labels */
+        }
+
+        .bar .bar-inner {
+            background-color: #374151; /* Dark bar track */
+            border-radius: 8px;
+            flex-grow: 1;
+            height: 45px;
+        }
+
+        .bar .bar-fill {
+            align-items: center;
+            border-radius: 8px;
+            color: white;
+            display: flex;
+            font-size: 18px;
+            font-weight: 700;
+            height: 100%;
+            justify-content: flex-end;
+            padding-left: 15px; /* RTL: padding left */
+            background: linear-gradient(90deg, #60A5FA, #3B82F6);
+        }
+
+        .chart-summary {
+            font-style: italic;
+            margin-top: 20px;
+            max-width: 90%;
+            text-align: center;
+            font-size: 20px;
+            color: #9CA3AF;
+        }
+
+        /* Q&A (for Slide 7) */
+        .qa-layout {
+            text-align: center;
+            width: 100%;
+            align-self: center;
+        }
+
+        .qa-layout h2 {
+            font-size: 100px;
+            margin-bottom: 20px;
+            color: #3B82F6; /* Accent color */
+        }
+
+        .qa-layout p {
+            font-size: 28px;
+        }
+
+        .qa-layout .contact-info {
+            color: #9CA3AF;
+            font-size: 22px;
+            margin-top: 40px;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- الشريحة 1: العنوان والمقدمة -->
+<div class="slide-container" id="slide1">
+    <div class="title-layout">
+        <h1>Morolium</h1>
+        <p class="subtitle">الارتقاء بموظفيكم... بذكاء مغربي</p>
+        <p style="font-size: 24px; margin-top: 50px;">محسن حصباوي - المؤسس والمطور</p>
+    </div>
+</div>
+
+<!-- الشريحة 2: المشكلة -->
+<div class="slide-container" id="slide2">
+    <h2 class="slide-title">تحديات التدريب في السوق المغربي</h2>
+    <div class="content-area">
+        <div class="tiled-content">
+            <div class="tile">
+                <div class="icon"><i class="fa-solid fa-language"></i></div>
+                <h3>غياب المحتوى المُلائم</h3>
+                <p>ندرة المنصات الاحترافية التي تلبي الاحتياجات الثنائية اللغة (عربي/فرنسي) والسياق المهني المغربي.</p>
+            </div>
+            <div class="tile">
+                <div class="icon"><i class="fa-solid fa-dollar-sign"></i></div>
+                <h3>التكلفة والتعقيد</h3>
+                <p>الحلول العالمية غالبًا ما تكون باهظة الثمن ومعقدة التشغيل، وغير مناسبة للشركات الصغيرة والمتوسطة.</p>
+            </div>
+            <div class="tile">
+                <div class="icon"><i class="fa-solid fa-chart-line"></i></div>
+                <h3>نقص التتبع</h3>
+                <p>حاجة الشركات لأدوات سهلة لتتبع تقدم الموظفين، وقياس الأداء، وإصدار شهادات احترافية.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- الشريحة 3: الحل والقيمة المقدمة -->
+<div class="slide-container" id="slide3">
+    <h2 class="slide-title">الحل: Morolium</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <ul>
+                    <li>
+                        <h3>منصة LMS مغربية 100%</h3>
+                        <p>احترافية، ثنائية اللغة (عربي/فرنسي)، تم تطوير محتواها بالكامل من قبل المؤسس.</p>
+                    </li>
+                    <li>
+                        <h3>تجربة تعلم سهلة ومرنة</h3>
+                        <p>توفير دورات جاهزة للموظفين مع واجهة مستخدم مبسطة تضمن سهولة الإعداد والاستخدام.</p>
+                    </li>
+                    <li>
+                        <h3>تحليلات الأداء والتوثيق</h3>
+                        <p>توفير شهادات معتمدة وتقارير تحليلات تقدمية لأداء الموظفين داخل الشركات.</p>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <div class="image-wrapper">
+                    <!-- This image is a placeholder showing a modern UI -->
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wzNjc5ODV8MHwxfHNlYXJjaHwxfHxkYXNoYm9hcmQlMjB1aXxlbnwwfHx8fDE3MzU5Mzg2NjN8MA&ixlib=rb-4.0.3&q=80&w=1080" alt="واجهة منصة Morolium">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- الشريحة 4: نموذج العمل (BMC) -->
+<div class="slide-container" id="slide4">
+    <h2 class="slide-title">نموذج العمل (Business Model Canvas)</h2>
+    <div class="content-area table-layout">
+        <table>
+            <thead>
+                <tr>
+                    <th>الشركاء الرئيسيون</th>
+                    <th>الأنشطة الرئيسية</th>
+                    <th>القيمة المقدمة</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <ul>
+                            <li>بوابات الدفع (CMI, Payzone)</li>
+                            <li>مزود الاستضافة (OVH)</li>
+                            <li>برنامج INDH</li>
+                            <li>الشركات الصغيرة والمتوسطة</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            <li>تطوير المنصة وإضافة ميزات</li>
+                            <li>إنشاء وإنتاج الدورات</li>
+                            <li>التسويق ودعم العملاء</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            <li>منصة تعلم مغربية احترافية</li>
+                            <li>ثنائية اللغة (عربي/فرنسي)</li>
+                            <li>دورات جاهزة مع شهادات</li>
+                            <li>تجربة تعلم سهلة ومرنة</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <th>العلاقات مع العملاء</th>
+                    <th>الموارد الرئيسية</th>
+                    <th>القنوات</th>
+                </tr>
+                <tr>
+                    <td>
+                        <ul>
+                            <li>دعم مباشر (ايميل، واتساب)</li>
+                            <li>تجربة onboarding</li>
+                            <li>تحديثات مستمرة</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            <li>مهارات المؤسس التقنية</li>
+                            <li>منصة LMS والمحتوى</li>
+                            <li>العلامة التجارية (OMPIC)</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            <li>الموقع الرسمي</li>
+                            <li>لينكدإن والفيسبوك</li>
+                            <li>تواصل مباشر مع HR</li>
+                            <li>المعارض المهنية</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <th>هيكل التكاليف</th>
+                    <th>شرائح العملاء</th>
+                    <th>مصادر الإيرادات</th>
+                </tr>
+                <tr>
+                    <td>
+                        <ul>
+                            <li>تكاليف تأسيسية منخفضة (~12,000 د.م)</li>
+                            <li>استضافة وسيرفرات (~3,000 د.م/سنة)</li>
+                            <li>تسويق وإعلانات (~2,000 د.م)</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            <li>الشركات الصغيرة والمتوسطة</li>
+                            <li>المنظمات غير الحكومية</li>
+                            <li>المؤسسات العامة ومراكز التدريب</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            <li>**اشتراكات SaaS:**</li>
+                            <li>أساسي: 499 د.م/شهر</li>
+                            <li>برو: 999 د.م/شهر</li>
+                            <li>مؤسسة: 2,500 د.م/شهر</li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- الشريحة 5: استراتيجية الوصول للسوق -->
+<div class="slide-container" id="slide5">
+    <h2 class="slide-title">استراتيجية الوصول للسوق (Go-to-Market)</h2>
+    <div class="content-area">
+        <div class="bullet-list">
+            <ul>
+                <li>
+                    <i class="fa-solid fa-users"></i>
+                    <strong>التواصل المباشر (B2B)</strong>
+                    <p style="font-size: 20px; margin-top: 5px;">استهداف مسؤولي الموارد البشرية في الشركات لتقديم عرض تجريبي مجاني ومخصص.</p>
+                </li>
+                <li>
+                    <i class="fa-solid fa-bullhorn"></i>
+                    <strong>التسويق الرقمي</strong>
+                    <p style="font-size: 20px; margin-top: 5px;">حملات إعلانية مركزة على LinkedIn و Facebook للوصول إلى صناع القرار في الشركات.</p>
+                </li>
+                <li>
+                    <i class="fa-solid fa-handshake"></i>
+                    <strong>الفعاليات والشراكات</strong>
+                    <p style="font-size: 20px; margin-top: 5px;">المشاركة في المعارض المهنية وبناء شراكات مع المنظمات الداعمة (مثل INDH).</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- الشريحة 6: التوقعات المالية -->
+<div class="slide-container" id="slide6">
+    <h2 class="slide-title">التوقعات المالية (3 سنوات)</h2>
+    <div class="content-area" style="flex-direction: column; justify-content: center;">
+        <div class="chart-container">
+            <div class="bar">
+                <div class="label">السنة 1 (10 شركات)</div>
+                <div class="bar-inner"><div class="bar-fill" style="width: 20%;">50,000 د.م</div></div>
+            </div>
+            <div class="bar">
+                <div class="label">السنة 2 (30 شركة)</div>
+                <div class="bar-inner"><div class="bar-fill" style="width: 50%;">300,000 د.م</div></div>
+            </div>
+            <div class="bar">
+                <div class="label">السنة 3 (50 شركة)</div>
+                <div class="bar-inner"><div class="bar-fill" style="width: 100%;">750,000 د.م</div></div>
+            </div>
+        </div>
+        <p class="chart-summary">
+            نموذج يعتمد على هامش ربح مرتفع بفضل ملكية المؤسس للمهارات التقنية والمحتوى (تطوير داخلي 100%).
+        </p>
+    </div>
+</div>
+
+<!-- الشريحة 7: الختام والدعوة للعمل -->
+<div class="slide-container" id="slide7">
+    <div class="qa-layout">
+        <h2>أسئلة؟</h2>
+        <p>شكراً لكم.</p>
+        <div class="contact-info">
+            <strong>الدعوة للعمل:</strong> ندعو الشركات المهتمة لتجربة المنصة مجاناً.
+        </div>
+    </div>
+</div>
+
+</body>
+  </html>
