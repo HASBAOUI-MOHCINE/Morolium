@@ -1,3 +1,5 @@
+import ComingSoon from '../components/ComingSoon'
+
 export default function JavaScriptEssentials() {
-  return <div>JavaScript Essentials Course Page</div>;
+  return <ComingSoon title="JavaScript Essentials" />
 }

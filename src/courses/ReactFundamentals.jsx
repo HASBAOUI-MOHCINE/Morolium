@@ -1,3 +1,5 @@
+import ComingSoon from '../components/ComingSoon'
+
 export default function ReactFundamentals() {
-  return <div>React Fundamentals Course Page</div>;
+  return <ComingSoon title="React Fundamentals" />
 }

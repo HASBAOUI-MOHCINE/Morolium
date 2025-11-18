@@ -1,3 +1,5 @@
+import ComingSoon from '../components/ComingSoon'
+
 export default function WebPerformanceOptimization() {
-  return <div>Web Performance Optimization Course Page</div>;
+  return <ComingSoon title="Web Performance Optimization" />
 }

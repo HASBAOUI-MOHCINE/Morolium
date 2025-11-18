@@ -1,3 +1,5 @@
+import ComingSoon from '../components/ComingSoon'
+
 export default function TailwindCSS() {
-  return <div>Tailwind CSS Course Page</div>;
+  return <ComingSoon title="Tailwind CSS" />
 }

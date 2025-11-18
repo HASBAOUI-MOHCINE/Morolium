@@ -294,16 +294,16 @@ export const coursesData = [
 
 // Available categories for filtering
 export const categories = [
-  'All',
-  'HTML',
-  'CSS',
-  'JavaScript',
-  'React',
-  'Vue',
-  'TypeScript',
-  'Tools',
-  'Performance',
-  'Accessibility'
+  { value: 'All', label: 'All' },
+  { value: 'HTML', label: 'HTML' },
+  { value: 'CSS', label: 'CSS' },
+  { value: 'JavaScript', label: 'JavaScript' },
+  { value: 'React', label: 'React' },
+  { value: 'Vue', label: 'Vue' },
+  { value: 'TypeScript', label: 'TypeScript' },
+  { value: 'Tools', label: 'Tools' },
+  { value: 'Performance', label: 'Performance' },
+  { value: 'Accessibility', label: 'Accessibility' }
 ];
 
 // Available color classes for course cards

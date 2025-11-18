@@ -1,3 +1,5 @@
+import ComingSoon from '../components/ComingSoon'
+
 export default function AnimationsAndTransitions() {
-  return <div>Animations and Transitions Course Page</div>;
+  return <ComingSoon title="Animations & Transitions" />
 }

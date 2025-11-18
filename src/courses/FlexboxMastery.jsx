@@ -1,3 +1,5 @@
+import ComingSoon from '../components/ComingSoon'
+
 export default function FlexboxMastery() {
-  return <div>Flexbox Mastery Course Page</div>;
+  return <ComingSoon title="Flexbox Mastery" />
 }

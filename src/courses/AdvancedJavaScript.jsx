@@ -1,3 +1,5 @@
+import ComingSoon from '../components/ComingSoon'
+
 export default function AdvancedJavaScript() {
-  return <div>Advanced JavaScript Course Page</div>;
+  return <ComingSoon title="Advanced JavaScript" />
 }

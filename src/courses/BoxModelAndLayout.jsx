@@ -1,3 +1,5 @@
+import ComingSoon from '../components/ComingSoon'
+
 export default function BoxModelAndLayout() {
-  return <div>Box Model and Layout Course Page</div>;
+  return <ComingSoon title="Box Model & Layout" />
 }

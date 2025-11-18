@@ -1,3 +1,5 @@
+import ComingSoon from '../components/ComingSoon'
+
 export default function ResponsiveDesign() {
-  return <div>Responsive Design Course Page</div>;
+  return <ComingSoon title="Responsive Design" />
 }
