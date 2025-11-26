@@ -1,10 +1,11 @@
 import React from 'react'
 import { Routes, Route, Link } from 'react-router-dom'
 
-import { Button } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { coursesData, categories } from '../data/coursesData'
 import { useTranslation } from '../i18n/TranslationProvider'
+import { cn } from '@/lib/utils'
 
 import HTMLFundamentals from '../courses/HTMLFundamentals.jsx'
 import CSSMastery from '../courses/CSSMastery.jsx'
@@ -66,7 +67,7 @@ export default function Courses() {
 											onClick={() => setSelectedCategory(cat.value)}
 											className={
 												selectedCategory === cat.value
-													? 'bg-primary text-primary-foreground border-transparent shadow-sm'
+													? 'bg-primary text-primary-foreground border-transparent shadow-md'
 													: 'border-border bg-card hover:bg-secondary/60'
 											}
 										>
@@ -116,9 +117,12 @@ export default function Courses() {
 														{course.duration}
 													</span>
 												</div>
-												<Button asChild className="w-full justify-center bg-primary text-primary-foreground hover:bg-primary/90">
-													<Link to="/coming-soon">{t.enrollNow}</Link>
-												</Button>
+												<Link 
+													to="/coming-soon" 
+													className={cn(buttonVariants(), "w-full justify-center shadow-sm")}
+												>
+													{t.enrollNow}
+												</Link>
 											</CardContent>
 										</Card>
 										)

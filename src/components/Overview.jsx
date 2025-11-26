@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from '../i18n/TranslationProvider'
-import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { cn } from '@/lib/utils'
 
 const fallbackFeatures = [
   { title: 'Structured Learning', description: 'Follow curated journeys that stack knowledge intentionally.' },
@@ -48,14 +49,20 @@ export default function Overview() {
               {t.heroLead}
             </p>
             <div className="flex flex-col gap-4 sm:flex-row sm:justify-center lg:justify-start">
-              <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90">
-                <Link to="/courses">{t.browseCourses}</Link>
-              </Button>
-              <Button asChild size="lg" variant="secondary" className="bg-secondary text-secondary-foreground hover:bg-secondary/80">
-                <Link to="/tracks">{t.viewTracks}</Link>
-              </Button>
+              <Link 
+                to="/courses" 
+                className={cn(buttonVariants({ size: "lg" }), "shadow-md")}
+              >
+                {t.browseCourses}
+              </Link>
+              <Link 
+                to="/tracks" 
+                className={cn(buttonVariants({ variant: "secondary", size: "lg" }), "shadow-md")}
+              >
+                {t.viewTracks}
+              </Link>
             </div>
-            <div className="grid gap-6 sm:grid-cols-3">
+            {/* <div className="grid gap-6 sm:grid-cols-3">
               {stats.map((stat) => (
                 <div key={stat.label} className="rounded-2xl border border-white/40 bg-white/70 px-4 py-5 text-center shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
                   <p className="text-3xl font-semibold text-primary">{stat.value}</p>
@@ -64,7 +71,7 @@ export default function Overview() {
                   </p>
                 </div>
               ))}
-            </div>
+            </div> */}
           </div>
           <div className="rounded-3xl border border-white/50 bg-white/70 p-6 shadow-lg backdrop-blur dark:border-white/10 dark:bg-white/5">
             <div className="space-y-6">
@@ -144,12 +151,18 @@ export default function Overview() {
             {t.ctaLead ?? 'Join thousands of creatives learning to design, develop, and deploy stunning experiences with modern tooling.'}
           </p>
           <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
-            <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90">
-              <Link to="/courses">{t.ctaPrimary ?? 'Explore cohorts'}</Link>
-            </Button>
-            <Button asChild size="lg" variant="secondary" className="bg-secondary text-secondary-foreground hover:bg-secondary/80">
-              <Link to="/coming-soon">{t.ctaSecondary ?? 'Get notified'}</Link>
-            </Button>
+            <Link 
+              to="/courses" 
+              className={cn(buttonVariants({ size: "lg" }), "shadow-md")}
+            >
+              {t.ctaPrimary ?? 'Explore cohorts'}
+            </Link>
+            <Link 
+              to="/coming-soon" 
+              className={cn(buttonVariants({ variant: "secondary", size: "lg" }), "shadow-md")}
+            >
+              {t.ctaSecondary ?? 'Get notified'}
+            </Link>
           </div>
         </div>
       </section>

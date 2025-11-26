@@ -10,7 +10,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 24 20% 12%;
     --primary: 43 95% 53%;          /* metallic gold */
-    --primary-foreground: 210 40% 98%;
+    --primary-foreground: 24 20% 12%; /* Dark text for better contrast on gold */
     --secondary: 199 90% 85%;       /* airy light blue */
     --secondary-foreground: 215 35% 22%;
     --muted: 48 33% 96%;
@@ -33,7 +33,7 @@
     --popover-foreground: 42 52% 96%;
     --primary: 32 96% 58%;          /* deeper burnt orange */
     --primary-foreground: 20 32% 10%;
-    --secondary: 215 28% 18%;
+    --secondary: 215 28% 25%;       /* lighter dark blue for better visibility */
     --secondary-foreground: 42 52% 96%;
     --muted: 215 20% 22%;
     --muted-foreground: 42 30% 78%;

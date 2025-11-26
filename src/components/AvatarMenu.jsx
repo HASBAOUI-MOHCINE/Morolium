@@ -18,7 +18,7 @@ export function AvatarMenu() {
         <Button
           variant="ghost"
           size="icon"
-          className="relative h-10 w-10 rounded-full bg-primary/10 text-primary hover:bg-primary/20"
+          className="relative h-10 w-10 rounded-lg bg-primary/10 text-primary hover:bg-primary/20"
         >
           <span className="text-sm font-semibold">MO</span>
         </Button>

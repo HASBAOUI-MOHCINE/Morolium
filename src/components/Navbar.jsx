@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { Link, useLocation } from "react-router-dom"
-import { Globe2, Menu, Moon, SunMedium, X, GraduationCap, BookOpen, Target, FileText, Library, User } from "lucide-react"
+import { Globe2, Menu, Moon, SunMedium, X, GraduationCap, BookOpen, Target, FileText, User } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -12,13 +12,14 @@ import {
 import { useTranslation } from "@/i18n/TranslationProvider"
 import { useTheme } from "@/ui/ThemeProvider"
 import { cn } from "@/lib/utils"
+import { useAuth } from "@/context/AuthContext"
+import AvatarDropdown from "@/ui/AvatarDropdown"
 
 const buildNavLinks = (labels) => [
 	{ to: "/", label: labels?.[0] ?? "Overview", icon: BookOpen },
 	{ to: "/courses", label: labels?.[1] ?? "Courses", icon: GraduationCap },
 	{ to: "/tracks", label: labels?.[2] ?? "Tracks", icon: Target },
 	{ to: "/exercises", label: labels?.[3] ?? "Exercises", icon: FileText },
-	{ to: "/resources", label: labels?.[4] ?? "Resources", icon: Library },
 	{ to: "/profile", label: labels?.[5] ?? "Profile", icon: User },
 ]
 
@@ -26,6 +27,7 @@ export default function Navbar() {
 	const location = useLocation()
 	const { theme, toggleTheme } = useTheme()
 	const { t, language, setLanguage } = useTranslation()
+	const { user } = useAuth()
 	const [mobileOpen, setMobileOpen] = useState(false)
 	const [scrolled, setScrolled] = useState(false)
 
@@ -60,22 +62,22 @@ export default function Navbar() {
 		>
 			<div className="container">
 				<div className={cn(
-					"flex h-20 items-center justify-between",
+					"flex h-20 items-center",
 					isRTL && "flex-row-reverse"
 				)}>
 					{/* Logo Section */}
-					<div className="flex items-center gap-8 lg:gap-12">
+					<div className="flex flex-1 items-center gap-8 lg:gap-12">
 						<Link 
 							to="/" 
 							className="group flex items-center gap-3 transition-all duration-300 hover:scale-105"
 						>
 							<div className="relative">
-								<div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-primary via-amber-400 to-primary shadow-lg transition-all duration-300 group-hover:shadow-xl group-hover:brightness-110">
+								<div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-primary via-amber-400 to-primary shadow-lg transition-all duration-300 group-hover:shadow-xl group-hover:brightness-110">
 									<span className="text-sm font-bold uppercase tracking-tight text-primary-foreground">
 										MO
 									</span>
 								</div>
-								<div className="absolute -inset-1 rounded-2xl bg-gradient-to-br from-primary/20 to-amber-400/20 blur-sm transition-all group-hover:blur-md" />
+								<div className="absolute -inset-1 rounded-lg bg-gradient-to-br from-primary/20 to-amber-400/20 blur-sm transition-all group-hover:blur-md" />
 							</div>
 							<div className={cn(
 								"hidden flex-col leading-tight md:flex",
@@ -89,9 +91,10 @@ export default function Navbar() {
 								</span>
 							</div>
 						</Link>
+					</div>
 
 						{/* Desktop Navigation */}
-						<nav className="hidden items-center gap-1 xl:flex">
+						<nav className="hidden items-center gap-1 xl:flex justify-center">
 							{navLinks.map((link) => {
 								const Icon = link.icon
 								return (
@@ -99,7 +102,7 @@ export default function Navbar() {
 										key={link.to}
 										to={link.to}
 										className={cn(
-											"group relative flex items-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold transition-all duration-300",
+											"group relative flex items-center gap-2 rounded-lg px-4 py-3 text-sm font-semibold transition-all duration-300",
 											isActive(link.to)
 												? "text-foreground shadow-sm"
 												: "text-muted-foreground hover:bg-secondary/40 hover:text-foreground hover:shadow-md",
@@ -121,29 +124,44 @@ export default function Navbar() {
 														? "inset-x-3 -bottom-2 bg-gradient-to-l from-amber-400 to-primary" 
 														: "inset-x-3 -bottom-2"
 												)} />
-												<div className="absolute -inset-2 rounded-2xl bg-gradient-to-br from-primary/5 to-amber-400/5 -z-10" />
+												<div className="absolute -inset-2 rounded-lg bg-gradient-to-br from-primary/5 to-amber-400/5 -z-10" />
 											</>
 										)}
 									</Link>
 								)
 							})}
 						</nav>
-					</div>
 
 					{/* Right Section - Controls */}
 					<div className={cn(
-						"flex items-center gap-3",
+						"flex flex-1 items-center gap-3 justify-end",
 						isRTL && "flex-row-reverse"
 					)}>
+						{/* Auth Buttons (Desktop) */}
+						<div className="hidden md:flex items-center gap-2">
+							{user ? (
+								<AvatarDropdown />
+							) : (
+								<>
+									<Button variant="ghost" asChild>
+										<Link to="/login">{t.login || "Login"}</Link>
+									</Button>
+									<Button asChild>
+										<Link to="/register">{t.signup || "Sign Up"}</Link>
+									</Button>
+								</>
+							)}
+						</div>
+
 						{/* Mobile Menu Toggle with Enhanced Style */}
 						<Button
 							variant="ghost"
 							size="icon"
-							className="group relative rounded-2xl xl:hidden transition-all duration-300 hover:scale-105 hover:bg-secondary/50"
+							className="group relative rounded-lg xl:hidden transition-all duration-300 hover:scale-105 hover:bg-secondary/50"
 							onClick={() => setMobileOpen((prev) => !prev)}
 							aria-label="Toggle navigation"
 						>
-							<div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/10 to-amber-400/10 opacity-0 transition-opacity group-hover:opacity-100" />
+							<div className="absolute inset-0 rounded-lg bg-gradient-to-br from-primary/10 to-amber-400/10 opacity-0 transition-opacity group-hover:opacity-100" />
 							{mobileOpen ? (
 								<X className="h-5 w-5 transition-transform duration-300 rotate-90 scale-110" />
 							) : (
@@ -158,20 +176,20 @@ export default function Navbar() {
 									variant="ghost" 
 									size="icon" 
 									aria-label="Switch language"
-									className="group relative rounded-2xl transition-all duration-300 hover:scale-105 hover:bg-secondary/50"
+									className="group relative rounded-lg transition-all duration-300 hover:scale-105 hover:bg-secondary/50"
 								>
-									<div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/10 to-amber-400/10 opacity-0 transition-opacity group-hover:opacity-100" />
+									<div className="absolute inset-0 rounded-lg bg-gradient-to-br from-primary/10 to-amber-400/10 opacity-0 transition-opacity group-hover:opacity-100" />
 									<Globe2 className="h-5 w-5 transition-transform group-hover:rotate-12" />
 								</Button>
 							</DropdownMenuTrigger>
 							<DropdownMenuContent 
 								align={isRTL ? "start" : "end"}
-								className="w-44 rounded-2xl border-border/40 bg-card/95 backdrop-blur-xl p-2 shadow-xl"
+								className="w-44 rounded-lg border-border/40 bg-card/95 backdrop-blur-xl p-2 shadow-xl"
 							>
 								<DropdownMenuItem
 									onClick={() => setLanguage("en")}
 									className={cn(
-										"cursor-pointer rounded-xl px-3 py-3 transition-all duration-200",
+										"cursor-pointer rounded-lg px-3 py-3 transition-all duration-200",
 										language === "en" 
 											? "bg-gradient-to-r from-primary/15 to-amber-400/15 text-foreground font-semibold border border-primary/20" 
 											: "hover:bg-secondary/50"
@@ -194,7 +212,7 @@ export default function Navbar() {
 								<DropdownMenuItem
 									onClick={() => setLanguage("fr")}
 									className={cn(
-										"cursor-pointer rounded-xl px-3 py-3 transition-all duration-200",
+										"cursor-pointer rounded-lg px-3 py-3 transition-all duration-200",
 										language === "fr" 
 											? "bg-gradient-to-r from-primary/15 to-amber-400/15 text-foreground font-semibold border border-primary/20" 
 											: "hover:bg-secondary/50"
@@ -217,7 +235,7 @@ export default function Navbar() {
 								<DropdownMenuItem
 									onClick={() => setLanguage("ar")}
 									className={cn(
-										"cursor-pointer rounded-xl px-3 py-3 transition-all duration-200",
+										"cursor-pointer rounded-lg px-3 py-3 transition-all duration-200",
 										language === "ar" 
 											? "bg-gradient-to-r from-primary/15 to-amber-400/15 text-foreground font-semibold border border-primary/20" 
 											: "hover:bg-secondary/50"
@@ -246,9 +264,9 @@ export default function Navbar() {
 							size="icon"
 							onClick={toggleTheme}
 							aria-label="Toggle theme"
-							className="group relative rounded-2xl transition-all duration-300 hover:scale-105 hover:bg-secondary/50"
+							className="group relative rounded-lg transition-all duration-300 hover:scale-105 hover:bg-secondary/50"
 						>
-							<div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/10 to-amber-400/10 opacity-0 transition-opacity group-hover:opacity-100" />
+							<div className="absolute inset-0 rounded-lg bg-gradient-to-br from-primary/10 to-amber-400/10 opacity-0 transition-opacity group-hover:opacity-100" />
 							<SunMedium className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
 							<Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
 							<span className="sr-only">Toggle theme</span>
@@ -268,7 +286,7 @@ export default function Navbar() {
 											key={link.to}
 											to={link.to}
 											className={cn(
-												"group flex items-center gap-4 rounded-2xl px-4 py-4 text-base font-semibold transition-all duration-300",
+												"group flex items-center gap-4 rounded-lg px-4 py-4 text-base font-semibold transition-all duration-300",
 												isActive(link.to)
 													? "bg-gradient-to-r from-primary/10 to-amber-400/10 text-foreground border border-primary/20 shadow-md"
 													: "text-muted-foreground hover:bg-secondary/40 hover:text-foreground hover:shadow-sm",
@@ -277,7 +295,7 @@ export default function Navbar() {
 											onClick={() => setMobileOpen(false)}
 										>
 											<div className={cn(
-												"flex h-10 w-10 items-center justify-center rounded-xl transition-all duration-300",
+												"flex h-10 w-10 items-center justify-center rounded-lg transition-all duration-300",
 												isActive(link.to)
 													? "bg-primary text-primary-foreground shadow-md"
 													: "bg-secondary/50 group-hover:bg-primary/20 group-hover:text-primary"
@@ -304,6 +322,18 @@ export default function Navbar() {
 										</Link>
 									)
 								})}
+								
+								{/* Mobile Auth Buttons */}
+								{!user && (
+									<div className="grid gap-2 mt-4 pt-4 border-t border-border/40">
+										<Button variant="ghost" asChild className="w-full justify-start" onClick={() => setMobileOpen(false)}>
+											<Link to="/login">{t.login || "Login"}</Link>
+										</Button>
+										<Button asChild className="w-full justify-start" onClick={() => setMobileOpen(false)}>
+											<Link to="/register">{t.signup || "Sign Up"}</Link>
+										</Button>
+									</div>
+								)}
 							</nav>
 							
 							{/* Mobile Footer */}

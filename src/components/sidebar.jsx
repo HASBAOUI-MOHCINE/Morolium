@@ -9,7 +9,7 @@ export default function Sidebar() {
     <>
       {/* Hamburger button for small screens */}
       <button
-        className="md:hidden p-2 text-gray-100 bg-gray-800 fixed top-4 left-4 z-50 rounded-full shadow-lg"
+        className="md:hidden p-2 text-gray-100 bg-gray-800 fixed top-4 left-4 z-50 rounded-lg shadow-lg"
         onClick={() => setIsOpen(!isOpen)}
       >
         <FaBars size={20} />
