@@ -5,6 +5,8 @@ import connectDB from './config/db.js';
 import trackRoutes from './routes/trackRoutes.js';
 import exerciseRoutes from './routes/exerciseRoutes.js';
 import userRoutes from './routes/userRoutes.js';
+
+import process from 'process';
 import authRoutes from './routes/authRoutes.js';
 
 dotenv.config();
