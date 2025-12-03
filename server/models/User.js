@@ -14,6 +14,12 @@ const userSchema = new mongoose.Schema({
     coursesCompleted: { type: Number, default: 0 },
     hoursLearned: { type: Number, default: 0 }
   },
+  courseProgress: [{
+    course: { type: mongoose.Schema.Types.ObjectId, ref: 'Course' },
+    completedSections: [{ type: String }], // Store section _ids
+    isCompleted: { type: Boolean, default: false },
+    progress: { type: Number, default: 0 }
+  }],
   recentActivity: [{
     id: Number,
     action: String,

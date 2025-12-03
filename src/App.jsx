@@ -14,6 +14,8 @@ import { AuthProvider } from './context/AuthContext';
 import { TranslationProvider } from './i18n/TranslationProvider'
 import ThemeProvider from './ui/ThemeProvider'
 import ComingSoon from './components/ComingSoon.jsx';
+import AdminDashboard from './components/AdminDashboard.jsx';
+
 function App() {
   // Theme and language are now provided by context providers
 
@@ -35,6 +37,7 @@ function App() {
                 <Route path="/tracks" element={<Tracks />} />
                 <Route path="/exercises" element={<Exercises />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/admin" element={<AdminDashboard />} />
               </Route>
               
               <Route path="/coming-soon" element={<ComingSoon />} />

@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Routes, Route, Link } from 'react-router-dom'
 
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { coursesData, categories } from '../data/coursesData'
+import { coursesData } from '../data/coursesData'
 import { useTranslation } from '../i18n/TranslationProvider'
+import { strings } from '../i18n/translations'
 import { cn } from '@/lib/utils'
+import courseService from '../services/courseService'
 
 import HTMLFundamentals from '../courses/HTMLFundamentals.jsx'
 import CSSMastery from '../courses/CSSMastery.jsx'
@@ -25,16 +27,46 @@ import WebPerformanceOptimization from '../courses/WebPerformanceOptimization.js
 import WebAccessibility from '../courses/WebAccessibility.jsx'
 import VueEssentials from '../courses/VueEssentials.jsx'
 import ComingSoon from './ComingSoon.jsx'
+import CourseDetail from './CourseDetail.jsx'
+import SectionDetail from './SectionDetail.jsx'
 
 export default function Courses() {
 	const [selectedCategory, setSelectedCategory] = React.useState('All')
+	const [apiCourses, setApiCourses] = useState([])
 	const { t, language } = useTranslation()
 	const isRTL = language === 'ar'
 
+	useEffect(() => {
+		const fetchCourses = async () => {
+			try {
+				const data = await courseService.getCourses()
+				setApiCourses(data)
+			} catch (error) {
+				console.error('Failed to fetch courses', error)
+			}
+		}
+		fetchCourses()
+	}, [])
+
+	const allCourses = [...(Array.isArray(apiCourses) ? apiCourses : []).map(c => ({
+		id: c._id,
+		title: c.title,
+		description: c.description,
+		level: c.difficulty,
+		category: c.category || 'General',
+		duration: c.duration,
+		_id: c._id // Keep original ID for linking
+	}))]
+
+	const categories = ['All', ...new Set(allCourses.map(c => c.category))].map(cat => ({
+		value: cat,
+		label: cat
+	}));
+
 	const filteredCourses =
 		selectedCategory === 'All'
-			? coursesData
-			: coursesData.filter((course) => course.category === selectedCategory)
+			? allCourses
+			: allCourses.filter((course) => course.category === selectedCategory)
 
 	return (
 		<div className="flex-1 bg-background text-foreground" dir={isRTL ? 'rtl' : 'ltr'}>
@@ -78,7 +110,21 @@ export default function Courses() {
 
 								<div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
 									{filteredCourses.map((course) => {
+										// Find translation key by matching English title
+										let translationKey = null;
+										if (strings.en.courseCopy) {
+											for (const [key, value] of Object.entries(strings.en.courseCopy)) {
+												if (value.title === course.title) {
+													translationKey = key;
+													break;
+												}
+											}
+										}
+
 										const levelLabel = t.levels?.[course.level] ?? course.level
+										const translatedTitle = translationKey ? t.courseCopy?.[translationKey]?.title : course.title
+										const translatedDesc = translationKey ? t.courseCopy?.[translationKey]?.description : course.description
+
 										return (
 										<Card
 											key={course.id}
@@ -88,7 +134,7 @@ export default function Courses() {
 											<CardHeader className="pb-4">
 												<div className="flex items-start justify-between gap-3">
 													<CardTitle className="text-lg font-semibold text-foreground">
-														{t.courseCopy?.[course.id]?.title ?? course.title}
+														{translatedTitle}
 													</CardTitle>
 													<span
 														className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium shadow-sm ${
@@ -103,7 +149,7 @@ export default function Courses() {
 													</span>
 												</div>
 												<p className="mt-2 text-sm text-muted-foreground">
-													{t.courseCopy?.[course.id]?.description ?? course.description}
+													{translatedDesc}
 												</p>
 											</CardHeader>
 											<CardContent className="pt-0">
@@ -118,7 +164,7 @@ export default function Courses() {
 													</span>
 												</div>
 												<Link 
-													to="/coming-soon" 
+													to={course._id || course.path || '/coming-soon'} 
 													className={cn(buttonVariants(), "w-full justify-center shadow-sm")}
 												>
 													{t.enrollNow}
@@ -157,6 +203,8 @@ export default function Courses() {
 					<Route path="WebAccessibility-a11y" element={<WebAccessibility />} />
 					<Route path="VuejsEssentials" element={<VueEssentials />} />
 					<Route path="/coming-soon" element={<ComingSoon />} />
+					<Route path=":id" element={<CourseDetail />} />
+					<Route path=":id/section/:sectionId" element={<SectionDetail />} />
 				</Routes>
 			</div>
 		</div>

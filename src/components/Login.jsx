@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useTranslation } from '@/i18n/TranslationProvider';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -13,6 +14,8 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
+  const { t, language } = useTranslation();
+  const isRTL = language === 'ar';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,18 +32,18 @@ export default function Login() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-[80vh] px-4">
+    <div className="flex items-center justify-center min-h-[80vh] px-4" dir={isRTL ? 'rtl' : 'ltr'}>
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle className="text-2xl text-center">Welcome Back</CardTitle>
+          <CardTitle className="text-2xl text-center">{t.welcomeBack || "Welcome Back"}</CardTitle>
           <CardDescription className="text-center">
-            Enter your credentials to access your account
+            {t.enterCredentials || "Enter your credentials to access your account"}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t.email || "Email"}</Label>
               <Input 
                 id="email" 
                 type="email" 
@@ -51,7 +54,7 @@ export default function Login() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">{t.password || "Password"}</Label>
               <Input 
                 id="password" 
                 type="password" 
@@ -62,15 +65,15 @@ export default function Login() {
             </div>
             {error && <p className="text-sm text-red-500 text-center">{error}</p>}
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? 'Logging in...' : 'Login'}
+              {loading ? (t.loggingIn || 'Logging in...') : (t.loginButton || 'Login')}
             </Button>
           </form>
         </CardContent>
         <CardFooter className="flex justify-center">
           <p className="text-sm text-muted-foreground">
-            Don't have an account?{' '}
+            {t.noAccount || "Don't have an account?"}{' '}
             <Link to="/register" className="text-primary hover:underline">
-              Sign up
+              {t.signupLink || "Sign up"}
             </Link>
           </p>
         </CardFooter>

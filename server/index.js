@@ -5,6 +5,7 @@ import connectDB from './config/db.js';
 import trackRoutes from './routes/trackRoutes.js';
 import exerciseRoutes from './routes/exerciseRoutes.js';
 import userRoutes from './routes/userRoutes.js';
+import courseRoutes from './routes/courseRoutes.js';
 
 import process from 'process';
 import authRoutes from './routes/authRoutes.js';
@@ -26,6 +27,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/tracks', trackRoutes);
 app.use('/api/exercises', exerciseRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/courses', courseRoutes);
 
 app.get('/', (req, res) => {
   res.send('Morolium API is running');

@@ -99,15 +99,19 @@ export default function Profile() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {profile.recentActivity.map((activity) => (
-                  <div key={activity.id} className="flex items-center justify-between border-b pb-4 last:border-0 last:pb-0">
-                    <div>
-                      <p className="font-medium">{activity.action}</p>
-                      <p className="text-sm text-muted-foreground">{activity.target}</p>
+                {profile.recentActivity && profile.recentActivity.length > 0 ? (
+                  profile.recentActivity.map((activity) => (
+                    <div key={activity.id} className="flex flex-col sm:flex-row sm:items-center justify-between border-b pb-4 last:border-0 last:pb-0 gap-2">
+                      <div>
+                        <p className="font-medium">{activity.action}</p>
+                        <p className="text-sm text-muted-foreground">{activity.target}</p>
+                      </div>
+                      <span className="text-xs text-muted-foreground">{activity.date}</span>
                     </div>
-                    <span className="text-xs text-muted-foreground">{activity.date}</span>
-                  </div>
-                ))}
+                  ))
+                ) : (
+                  <p className="text-muted-foreground text-sm">No recent activity.</p>
+                )}
               </div>
             </CardContent>
           </Card>
