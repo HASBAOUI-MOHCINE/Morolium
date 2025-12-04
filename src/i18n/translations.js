@@ -66,6 +66,9 @@ export const strings = {
       Beginner: 'Beginner',
       Intermediate: 'Intermediate',
       Advanced: 'Advanced',
+      Easy: 'Easy',
+      Medium: 'Medium',
+      Hard: 'Hard',
     },
     courseCopy: {
       1: {
@@ -141,6 +144,23 @@ export const strings = {
     creatingAccount: 'Creating account...',
     alreadyHaveAccount: 'Already have an account?',
     loginLink: 'Login',
+    // Exercises
+    exercisesTitle: 'Practice Challenges',
+    exercisesLead: 'Build real-world skills through interactive exercises and projects.',
+    topicLabel: 'Topic',
+    xpLabel: 'XP',
+    reviewButton: 'Review',
+    solveButton: 'Solve',
+    status: {
+      Completed: 'Completed',
+      'In Progress': 'In Progress',
+      Locked: 'Locked'
+    },
+    // Course Detail
+    courseContent: 'Course Content',
+    section: 'Section',
+    completed: 'Completed',
+    start: 'Start'
   },
   fr: {
     nav: ['Aperçu', 'Cours', 'Parcours', 'Exercices', 'Ressources', 'Profil'],
@@ -195,6 +215,9 @@ export const strings = {
       Beginner: 'Débutant',
       Intermediate: 'Intermédiaire',
       Advanced: 'Avancé',
+      Easy: 'Facile',
+      Medium: 'Moyen',
+      Hard: 'Difficile',
     },
     courseCopy: {
       1: {
@@ -270,6 +293,23 @@ export const strings = {
     creatingAccount: 'Création du compte...',
     alreadyHaveAccount: 'Vous avez déjà un compte ?',
     loginLink: 'Connexion',
+    // Exercises
+    exercisesTitle: 'Défis pratiques',
+    exercisesLead: 'Développez des compétences concrètes à travers des exercices et projets interactifs.',
+    topicLabel: 'Sujet',
+    xpLabel: 'XP',
+    reviewButton: 'Revoir',
+    solveButton: 'Résoudre',
+    status: {
+      Completed: 'Terminé',
+      'In Progress': 'En cours',
+      Locked: 'Verrouillé'
+    },
+    // Course Detail
+    courseContent: 'Contenu du cours',
+    section: 'Section',
+    completed: 'Terminé',
+    start: 'Commencer'
   },
   ar: {
     nav: ['نظرة عامة', 'الدورات', 'المسارات', 'التمارين', 'الموارد', 'الملف الشخصي'],
@@ -324,6 +364,9 @@ export const strings = {
       Beginner: 'مبتدئ',
       Intermediate: 'متوسط',
       Advanced: 'متقدم',
+      Easy: 'سهل',
+      Medium: 'متوسط',
+      Hard: 'صعب',
     },
     courseCopy: {
       1: {
@@ -399,6 +442,23 @@ export const strings = {
     creatingAccount: 'جاري إنشاء الحساب...',
     alreadyHaveAccount: 'هل لديك حساب بالفعل؟',
     loginLink: 'تسجيل الدخول',
+    // Exercises
+    exercisesTitle: 'التحديات العملية',
+    exercisesLead: 'طور مهارات واقعية من خلال التمارين والمشاريع التفاعلية.',
+    topicLabel: 'الموضوع',
+    xpLabel: 'نقاط الخبرة',
+    reviewButton: 'مراجعة',
+    solveButton: 'حل',
+    status: {
+      Completed: 'مكتمل',
+      'In Progress': 'قيد التنفيذ',
+      Locked: 'مغلق'
+    },
+    // Course Detail
+    courseContent: 'محتوى الدورة',
+    section: 'القسم',
+    completed: 'مكتمل',
+    start: 'ابدأ'
   },
 }
 

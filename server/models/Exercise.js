@@ -6,7 +6,17 @@ const exerciseSchema = new mongoose.Schema({
   difficulty: { type: String, enum: ['Easy', 'Medium', 'Hard'], required: true },
   topic: { type: String, required: true },
   status: { type: String, enum: ['Completed', 'In Progress', 'Locked'], default: 'Locked' },
-  xp: { type: Number, required: true }
+  xp: { type: Number, required: true },
+  translations: {
+    fr: {
+      title: { type: String },
+      topic: { type: String }
+    },
+    ar: {
+      title: { type: String },
+      topic: { type: String }
+    }
+  }
 }, {
   timestamps: true
 });

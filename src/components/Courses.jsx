@@ -55,7 +55,8 @@ export default function Courses() {
 		level: c.difficulty,
 		category: c.category || 'General',
 		duration: c.duration,
-		_id: c._id // Keep original ID for linking
+		_id: c._id, // Keep original ID for linking
+        translations: c.translations
 	}))]
 
 	const categories = ['All', ...new Set(allCourses.map(c => c.category))].map(cat => ({
@@ -122,8 +123,11 @@ export default function Courses() {
 										}
 
 										const levelLabel = t.levels?.[course.level] ?? course.level
-										const translatedTitle = translationKey ? t.courseCopy?.[translationKey]?.title : course.title
-										const translatedDesc = translationKey ? t.courseCopy?.[translationKey]?.description : course.description
+										
+										// Priority: Database Translation -> Static File Translation -> Original Title
+										const dbTranslation = course.translations?.[language];
+										const translatedTitle = dbTranslation?.title || (translationKey ? t.courseCopy?.[translationKey]?.title : course.title)
+										const translatedDesc = dbTranslation?.description || (translationKey ? t.courseCopy?.[translationKey]?.description : course.description)
 
 										return (
 										<Card

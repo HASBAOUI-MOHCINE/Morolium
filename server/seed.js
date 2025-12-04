@@ -46,7 +46,11 @@ const exercisesData = [
     difficulty: 'Easy',
     topic: 'CSS',
     status: 'Completed',
-    xp: 50
+    xp: 50,
+    translations: {
+      fr: { title: 'Clone de Flexbox Froggy', topic: 'CSS' },
+      ar: { title: 'استنساخ Flexbox Froggy', topic: 'CSS' }
+    }
   },
   {
     id: 2,
@@ -54,7 +58,11 @@ const exercisesData = [
     difficulty: 'Medium',
     topic: 'JavaScript',
     status: 'In Progress',
-    xp: 100
+    xp: 100,
+    translations: {
+      fr: { title: 'Pratique des méthodes de tableau', topic: 'JavaScript' },
+      ar: { title: 'ممارسة طرق المصفوفات', topic: 'جافا سكريبت' }
+    }
   },
   {
     id: 3,
@@ -62,7 +70,11 @@ const exercisesData = [
     difficulty: 'Medium',
     topic: 'React',
     status: 'Locked',
-    xp: 150
+    xp: 150,
+    translations: {
+      fr: { title: 'Créer une application Todo', topic: 'React' },
+      ar: { title: 'بناء تطبيق قائمة المهام', topic: 'رياكت' }
+    }
   },
   {
     id: 4,
@@ -70,7 +82,11 @@ const exercisesData = [
     difficulty: 'Hard',
     topic: 'JavaScript',
     status: 'Locked',
-    xp: 200
+    xp: 200,
+    translations: {
+      fr: { title: 'Défis Async/Await', topic: 'JavaScript' },
+      ar: { title: 'تحديات Async/Await', topic: 'جافا سكريبت' }
+    }
   }
 ];
 

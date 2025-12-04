@@ -18,6 +18,17 @@ const AdminDashboard = () => {
     xp: 100,
     sections: []
   });
+  const [translations, setTranslations] = useState({
+    fr: { title: '', description: '' },
+    ar: { title: '', description: '' }
+  });
+  const [sectionTranslations, setSectionTranslations] = useState({
+    fr: { title: '', content: '' },
+    ar: { title: '', content: '' }
+  });
+  const [isTranslating, setIsTranslating] = useState(false);
+  const [isSectionTranslating, setIsSectionTranslating] = useState(false);
+
   const [sectionData, setSectionData] = useState({
     title: '',
     content: '',
@@ -30,6 +41,56 @@ const AdminDashboard = () => {
     fetchUsers();
     fetchCourses();
   }, []);
+
+  const handleAutoTranslate = async () => {
+    if (!courseData.title || !courseData.description) {
+      alert('Please fill in English title and description first.');
+      return;
+    }
+    setIsTranslating(true);
+    try {
+      const [frTitle, frDesc, arTitle, arDesc] = await Promise.all([
+        courseService.translateText(courseData.title, 'fr'),
+        courseService.translateText(courseData.description, 'fr'),
+        courseService.translateText(courseData.title, 'ar'),
+        courseService.translateText(courseData.description, 'ar')
+      ]);
+      setTranslations({
+        fr: { title: frTitle, description: frDesc },
+        ar: { title: arTitle, description: arDesc }
+      });
+    } catch (error) {
+      console.error('Translation failed', error);
+      alert('Auto translation failed. Please try again.');
+    } finally {
+      setIsTranslating(false);
+    }
+  };
+
+  const handleSectionAutoTranslate = async () => {
+    if (!sectionData.title || !sectionData.content) {
+      alert('Please fill in English section title and content first.');
+      return;
+    }
+    setIsSectionTranslating(true);
+    try {
+      const [frTitle, frContent, arTitle, arContent] = await Promise.all([
+        courseService.translateText(sectionData.title, 'fr'),
+        courseService.translateText(sectionData.content, 'fr'),
+        courseService.translateText(sectionData.title, 'ar'),
+        courseService.translateText(sectionData.content, 'ar')
+      ]);
+      setSectionTranslations({
+        fr: { title: frTitle, content: frContent },
+        ar: { title: arTitle, content: arContent }
+      });
+    } catch (error) {
+      console.error('Translation failed', error);
+      alert('Section auto translation failed. Please try again.');
+    } finally {
+      setIsSectionTranslating(false);
+    }
+  };
 
   const fetchUsers = async () => {
     try {
@@ -74,15 +135,19 @@ const AdminDashboard = () => {
     if (!sectionData.title) return;
     setCourseData({
       ...courseData,
-      sections: [...courseData.sections, sectionData]
+      sections: [...courseData.sections, { ...sectionData, translations: sectionTranslations }]
     });
     setSectionData({ title: '', content: '', xp: 10 });
+    setSectionTranslations({
+        fr: { title: '', content: '' },
+        ar: { title: '', content: '' }
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await courseService.createCourse(courseData);
+      await courseService.createCourse({ ...courseData, translations });
       alert('Course created successfully!');
       setCourseData({
         title: '',
@@ -92,6 +157,10 @@ const AdminDashboard = () => {
         duration: '',
         xp: 100,
         sections: []
+      });
+      setTranslations({
+        fr: { title: '', description: '' },
+        ar: { title: '', description: '' }
       });
     } catch (error) {
       console.error(error);
@@ -133,6 +202,50 @@ const AdminDashboard = () => {
                 className="flex min-h-[100px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               />
             </div>
+
+            <div className="border p-4 rounded-md space-y-4 bg-muted/20">
+                <div className="flex items-center justify-between">
+                    <h3 className="font-semibold">Translations</h3>
+                    <Button type="button" onClick={handleAutoTranslate} disabled={isTranslating} variant="outline" size="sm">
+                        {isTranslating ? 'Translating...' : 'Auto Translate (AI)'}
+                    </Button>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                        <Label>French Title</Label>
+                        <Input 
+                            value={translations.fr.title} 
+                            onChange={(e) => setTranslations({...translations, fr: {...translations.fr, title: e.target.value}})} 
+                            placeholder="Titre en français"
+                        />
+                        <Label>French Description</Label>
+                        <textarea 
+                            className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                            value={translations.fr.description} 
+                            onChange={(e) => setTranslations({...translations, fr: {...translations.fr, description: e.target.value}})} 
+                            placeholder="Description en français"
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <Label>Arabic Title</Label>
+                        <Input 
+                            value={translations.ar.title} 
+                            onChange={(e) => setTranslations({...translations, ar: {...translations.ar, title: e.target.value}})} 
+                            dir="rtl"
+                            placeholder="العنوان بالعربية"
+                        />
+                        <Label>Arabic Description</Label>
+                        <textarea 
+                            className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                            value={translations.ar.description} 
+                            onChange={(e) => setTranslations({...translations, ar: {...translations.ar, description: e.target.value}})} 
+                            dir="rtl"
+                            placeholder="الوصف بالعربية"
+                        />
+                    </div>
+                </div>
+            </div>
+
             <div>
               <Label htmlFor="image">Image URL</Label>
               <Input id="image" name="image" value={courseData.image} onChange={handleCourseChange} />
@@ -179,6 +292,52 @@ const AdminDashboard = () => {
                             className="flex min-h-[150px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                         />
                     </div>
+
+                    <div className="border p-4 rounded-md space-y-4 bg-muted/20">
+                        <div className="flex items-center justify-between">
+                            <h4 className="font-semibold text-sm">Section Translations</h4>
+                            <Button type="button" onClick={handleSectionAutoTranslate} disabled={isSectionTranslating} variant="outline" size="sm">
+                                {isSectionTranslating ? 'Translating...' : 'Auto Translate Section'}
+                            </Button>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <Label className="text-xs">French Title</Label>
+                                <Input 
+                                    value={sectionTranslations.fr.title} 
+                                    onChange={(e) => setSectionTranslations({...sectionTranslations, fr: {...sectionTranslations.fr, title: e.target.value}})} 
+                                    placeholder="Titre de section en français"
+                                    className="h-8 text-xs"
+                                />
+                                <Label className="text-xs">French Content</Label>
+                                <textarea 
+                                    className="flex min-h-[60px] w-full rounded-md border border-input bg-background px-3 py-2 text-xs ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                                    value={sectionTranslations.fr.content} 
+                                    onChange={(e) => setSectionTranslations({...sectionTranslations, fr: {...sectionTranslations.fr, content: e.target.value}})} 
+                                    placeholder="Contenu en français"
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label className="text-xs">Arabic Title</Label>
+                                <Input 
+                                    value={sectionTranslations.ar.title} 
+                                    onChange={(e) => setSectionTranslations({...sectionTranslations, ar: {...sectionTranslations.ar, title: e.target.value}})} 
+                                    dir="rtl"
+                                    placeholder="عنوان القسم بالعربية"
+                                    className="h-8 text-xs"
+                                />
+                                <Label className="text-xs">Arabic Content</Label>
+                                <textarea 
+                                    className="flex min-h-[60px] w-full rounded-md border border-input bg-background px-3 py-2 text-xs ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                                    value={sectionTranslations.ar.content} 
+                                    onChange={(e) => setSectionTranslations({...sectionTranslations, ar: {...sectionTranslations.ar, content: e.target.value}})} 
+                                    dir="rtl"
+                                    placeholder="محتوى القسم بالعربية"
+                                />
+                            </div>
+                        </div>
+                    </div>
+
                     <Button type="button" onClick={addSection} variant="outline" className="mt-2">Add Section</Button>
                 </div>
                 <div className="mt-4">

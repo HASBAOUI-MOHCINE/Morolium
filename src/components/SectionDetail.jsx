@@ -5,10 +5,12 @@ import { getUserProfile } from '../services/userService';
 import { Button } from './ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { ArrowLeft, ArrowRight, CheckCircle } from 'lucide-react';
+import { useTranslation } from '../i18n/TranslationProvider';
 
 const SectionDetail = () => {
   const { id, sectionId } = useParams();
   const navigate = useNavigate();
+  const { t, language } = useTranslation();
   const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
   const [section, setSection] = useState(null);
@@ -77,6 +79,10 @@ const SectionDetail = () => {
   if (loading) return <div className="p-8 text-center">Loading...</div>;
   if (!course || !section) return <div className="p-8 text-center">Section not found</div>;
 
+  const sectionTranslation = section.translations?.[language];
+  const sectionTitle = sectionTranslation?.title || section.title;
+  const sectionContent = sectionTranslation?.content || section.content;
+
   return (
     <div className="p-4 sm:p-8 max-w-4xl mx-auto">
       <div className="mb-6">
@@ -89,28 +95,28 @@ const SectionDetail = () => {
       
       <Card className="mb-8">
         <CardHeader>
-          <CardTitle className="text-xl">{section.title}</CardTitle>
+          <CardTitle className="text-xl">{sectionTitle}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="prose dark:prose-invert max-w-none mb-8">
               {/* Render content here. */}
-              {section.content.startsWith('http') ? (
-                  section.content.includes('youtube.com') || section.content.includes('youtu.be') ? (
+              {sectionContent.startsWith('http') ? (
+                  sectionContent.includes('youtube.com') || sectionContent.includes('youtu.be') ? (
                     <div className="aspect-video w-full">
                         <iframe 
-                            src={section.content.replace('watch?v=', 'embed/').replace('youtu.be/', 'www.youtube.com/embed/')} 
-                            title={section.title}
+                            src={sectionContent.replace('watch?v=', 'embed/').replace('youtu.be/', 'www.youtube.com/embed/')} 
+                            title={sectionTitle}
                             className="w-full h-full rounded-md"
                             allowFullScreen
                         />
                     </div>
                   ) : (
-                    <a href={section.content} target="_blank" rel="noopener noreferrer" className="text-primary underline hover:text-primary/80">
-                        View External Content: {section.content}
+                    <a href={sectionContent} target="_blank" rel="noopener noreferrer" className="text-primary underline hover:text-primary/80">
+                        View External Content: {sectionContent}
                     </a>
                   )
               ) : (
-                  <div className="whitespace-pre-wrap">{section.content}</div>
+                  <div className="whitespace-pre-wrap">{sectionContent}</div>
               )}
           </div>
           

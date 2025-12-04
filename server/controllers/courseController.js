@@ -34,7 +34,7 @@ const getCourseById = async (req, res) => {
 // @access  Private/Admin
 const createCourse = async (req, res) => {
   try {
-    const { title, description, image, difficulty, category, duration, xp, track, sections } = req.body;
+    const { title, description, image, difficulty, category, duration, xp, track, sections, translations } = req.body;
 
     const course = new Course({
       title,
@@ -45,11 +45,43 @@ const createCourse = async (req, res) => {
       duration,
       xp,
       track,
-      sections
+      sections,
+      translations
     });
 
     const createdCourse = await course.save();
     res.status(201).json(createdCourse);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+// @desc    Update a course
+// @route   PUT /api/courses/:id
+// @access  Private/Admin
+const updateCourse = async (req, res) => {
+  try {
+    const { title, description, image, difficulty, category, duration, xp, track, sections, translations } = req.body;
+
+    const course = await Course.findById(req.params.id);
+
+    if (course) {
+      course.title = title || course.title;
+      course.description = description || course.description;
+      course.image = image || course.image;
+      course.difficulty = difficulty || course.difficulty;
+      course.category = category || course.category;
+      course.duration = duration || course.duration;
+      course.xp = xp || course.xp;
+      course.track = track || course.track;
+      course.sections = sections || course.sections;
+      course.translations = translations || course.translations;
+
+      const updatedCourse = await course.save();
+      res.json(updatedCourse);
+    } else {
+      res.status(404).json({ message: 'Course not found' });
+    }
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -149,4 +181,4 @@ const updateCourseProgress = async (req, res) => {
   }
 };
 
-export { getCourses, getCourseById, createCourse, deleteCourse, updateCourseProgress };
+export { getCourses, getCourseById, createCourse, updateCourse, deleteCourse, updateCourseProgress };

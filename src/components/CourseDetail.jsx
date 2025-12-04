@@ -10,7 +10,7 @@ import { strings } from '../i18n/translations';
 
 const CourseDetail = () => {
   const { id } = useParams();
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
   const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
   const [completedSections, setCompletedSections] = useState([]);
@@ -53,8 +53,10 @@ const CourseDetail = () => {
   }
 
   // Translation fallback logic
-  const translatedTitle = translationKey ? t.courseCopy?.[translationKey]?.title : course.title;
-  const translatedDescription = translationKey ? t.courseCopy?.[translationKey]?.description : course.description;
+  const dbTranslation = course.translations?.[language];
+  
+  const translatedTitle = dbTranslation?.title || (translationKey ? t.courseCopy?.[translationKey]?.title : course.title);
+  const translatedDescription = dbTranslation?.description || (translationKey ? t.courseCopy?.[translationKey]?.description : course.description);
   const translatedCategory = t.categoryLabels?.[course.category] ?? course.category;
   const translatedLevel = t.levels?.[course.difficulty] ?? course.difficulty;
 
@@ -75,6 +77,10 @@ const CourseDetail = () => {
         {course.sections && course.sections.length > 0 ? (
             course.sections.map((section, index) => {
                 const isCompleted = completedSections.includes(section._id);
+                const sectionTranslation = section.translations?.[language];
+                const sectionTitle = sectionTranslation?.title || section.title;
+                const sectionContent = sectionTranslation?.content || section.content;
+
                 return (
                 <Link to={`/courses/${id}/section/${section._id}`} key={section._id} className="block">
                     <Card className={`hover:shadow-md transition-shadow cursor-pointer border-l-4 ${isCompleted ? 'border-l-green-500' : 'border-l-primary'}`}>
@@ -84,9 +90,9 @@ const CourseDetail = () => {
                                     {isCompleted ? <CheckCircle size={24} /> : <PlayCircle size={24} />}
                                 </div>
                                 <div className="min-w-0">
-                                    <h3 className="font-semibold text-lg truncate">{t.section ?? 'Section'} {index + 1}: {section.title}</h3>
+                                    <h3 className="font-semibold text-lg truncate">{t.section ?? 'Section'} {index + 1}: {sectionTitle}</h3>
                                     <p className="text-sm text-muted-foreground line-clamp-1">
-                                        {section.content.substring(0, 100)}...
+                                        {sectionContent.substring(0, 100)}...
                                     </p>
                                 </div>
                             </div>

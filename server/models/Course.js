@@ -3,7 +3,17 @@ import mongoose from 'mongoose';
 const sectionSchema = new mongoose.Schema({
   title: { type: String, required: true },
   content: { type: String }, // Could be markdown, video url, etc.
-  xp: { type: Number, default: 10 }
+  xp: { type: Number, default: 10 },
+  translations: {
+    fr: {
+      title: { type: String },
+      content: { type: String }
+    },
+    ar: {
+      title: { type: String },
+      content: { type: String }
+    }
+  }
 });
 
 const courseSchema = new mongoose.Schema({
@@ -15,6 +25,16 @@ const courseSchema = new mongoose.Schema({
   duration: { type: String },
   xp: { type: Number, default: 100 },
   track: { type: mongoose.Schema.Types.ObjectId, ref: 'Track' },
+  translations: {
+    fr: {
+      title: { type: String },
+      description: { type: String }
+    },
+    ar: {
+      title: { type: String },
+      description: { type: String }
+    }
+  },
   sections: [sectionSchema]
 }, {
   timestamps: true

@@ -9,6 +9,7 @@ import courseRoutes from './routes/courseRoutes.js';
 
 import process from 'process';
 import authRoutes from './routes/authRoutes.js';
+import translateRoutes from './routes/translateRoutes.js';
 
 dotenv.config();
 
@@ -28,6 +29,7 @@ app.use('/api/tracks', trackRoutes);
 app.use('/api/exercises', exerciseRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/courses', courseRoutes);
+app.use('/api/translate', translateRoutes);
 
 app.get('/', (req, res) => {
   res.send('Morolium API is running');
